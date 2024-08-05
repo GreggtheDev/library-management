@@ -61,5 +61,19 @@ public class Library {
                 .filter(book -> book.getCategory().equals(category))
                 .collect(Collectors.toList());
     }
+
+    // Method to add a user to the library
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    // Method to find a user by library card number
+    public User findUserByLibraryCardNumber(String libraryCardNumber) {
+        return users.stream()
+                .filter(user -> user.getLibraryCardNumber().equals(libraryCardNumber))
+                .findFirst()
+                .orElse(null);
+    }
+
 }
 
