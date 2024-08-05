@@ -107,6 +107,11 @@ public class Library {
         }
     }
 
+    // Method to calculate total late fees for a user
+    public double calculateTotalLateFeesForUser(String libraryCardNumber) {
+        User user = findUserByLibraryCardNumber(libraryCardNumber);
+        return user != null ? user.calculateTotalLateFees() : 0;
+    }
 
 }
 
