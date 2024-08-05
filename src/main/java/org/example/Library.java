@@ -75,5 +75,38 @@ public class Library {
                 .orElse(null);
     }
 
+    // Method to loan a book to a user
+    public void loanBook(String title, String libraryCardNumber, LocalDate loanDate) {
+        Optional<Book> bookToLoan = books.stream()
+                .filter(book -> book.getTitle().equals(title) && !book.isOnLoan())
+                .findFirst();
+
+        Optional<User> user = users.stream()
+                .filter(u -> u.getLibraryCardNumber().equals(libraryCardNumber))
+                .findFirst();
+
+        if (bookToLoan.isPresent() && user.isPresent()) {
+            bookToLoan.get().setOnLoan(true, loanDate);
+            user.get().loanBook(bookToLoan.get());
+        }
+    }
+
+    // Method to return a book
+    public void returnBook(String title, String libraryCardNumber) {
+        Optional<Book> bookToReturn = books.stream()
+                .filter(book -> book.getTitle().equals(title) && book.isOnLoan())
+                .findFirst();
+
+        Optional<User> user = users.stream()
+                .filter(u -> u.getLibraryCardNumber().equals(libraryCardNumber))
+                .findFirst();
+
+        if (bookToReturn.isPresent() && user.isPresent()) {
+            bookToReturn.get().setOnLoan(false, null);
+            user.get().returnBook(bookToReturn.get());
+        }
+    }
+
+
 }
 
